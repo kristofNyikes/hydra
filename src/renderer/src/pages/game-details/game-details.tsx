@@ -138,6 +138,36 @@ export default function GameDetails() {
             return response;
           };
 
+          const handleStartCustomDownload = async (
+            uri: string,
+            downloadPath: string,
+            automaticallyExtract: boolean,
+            automaticallyDeleteArchiveFiles: boolean,
+            signal?: AbortSignal
+          ) => {
+            const payload = {
+              objectId: objectId!,
+              title: gameTitle,
+              downloader: Downloader.Custom,
+              shop,
+              downloadPath,
+              uri,
+              automaticallyExtract,
+              automaticallyDeleteArchiveFiles,
+            };
+
+            const response = await startDownload(payload, signal);
+
+            if (response.ok) {
+              await updateGame();
+              setShowRepacksModal(false);
+              setShowGameOptionsModal(false);
+              setGameOptionsInitialCategory("general");
+            }
+
+            return response;
+          };
+
           const handleNSFWContentRefuse = () => {
             setHasNSFWContentBlocked(false);
             navigate(-1);
@@ -172,6 +202,7 @@ export default function GameDetails() {
                   <RepacksModal
                     visible={showRepacksModal}
                     startDownload={handleStartDownload}
+                    startCustomDownload={handleStartCustomDownload}
                     onClose={() => setShowRepacksModal(false)}
                   />
 

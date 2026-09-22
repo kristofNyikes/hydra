@@ -18,6 +18,7 @@ import {
 } from "@renderer/components";
 import type { DownloadSource, Game, GameRepack } from "@types";
 
+import { CustomDownloadModal } from "./custom-download-modal";
 import { DownloadSettingsModal } from "./download-settings-modal";
 import { gameDetailsContext } from "@renderer/context";
 import {
@@ -60,17 +61,26 @@ export interface RepacksModalProps {
     automaticallyDeleteArchiveFiles?: boolean,
     signal?: AbortSignal
   ) => Promise<{ ok: boolean; error?: string }>;
+  startCustomDownload: (
+    uri: string,
+    downloadPath: string,
+    automaticallyExtract: boolean,
+    automaticallyDeleteArchiveFiles: boolean,
+    signal?: AbortSignal
+  ) => Promise<{ ok: boolean; error?: string }>;
   onClose: () => void;
 }
 
 export function RepacksModal({
   visible,
   startDownload,
+  startCustomDownload,
   onClose,
 }: Readonly<RepacksModalProps>) {
   const [filteredRepacks, setFilteredRepacks] = useState<GameRepack[]>([]);
   const [repack, setRepack] = useState<GameRepack | null>(null);
   const [showSelectFolderModal, setShowSelectFolderModal] = useState(false);
+  const [showCustomDownloadModal, setShowCustomDownloadModal] = useState(false);
   const [downloadSources, setDownloadSources] = useState<DownloadSource[]>([]);
   const [selectedFingerprints, setSelectedFingerprints] = useState<string[]>(
     []
@@ -307,6 +317,7 @@ export function RepacksModal({
       setFilterTerm("");
       setSelectedFingerprints([]);
       setIsFilterDrawerOpen(false);
+      setShowCustomDownloadModal(false);
     }
   }, [visible]);
 
@@ -329,12 +340,26 @@ export function RepacksModal({
         }}
       />
 
+      <CustomDownloadModal
+        visible={showCustomDownloadModal}
+        onClose={() => setShowCustomDownloadModal(false)}
+        startDownload={startCustomDownload}
+      />
+
       <Modal
         visible={visible}
         title={t("download_options_title")}
         description={t("repacks_modal_description")}
         onClose={onClose}
       >
+        <Button
+          type="button"
+          theme="outline"
+          onClick={() => setShowCustomDownloadModal(true)}
+          className="repacks-modal__custom-download-button"
+        >
+          {t("custom_download")}
+        </Button>
         <div
           className={`repacks-modal__filter-container ${isFilterDrawerOpen ? "repacks-modal__filter-container--drawer-open" : ""}`}
         >

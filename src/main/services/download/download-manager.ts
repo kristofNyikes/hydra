@@ -1683,6 +1683,18 @@ export class DownloadManager {
         return this.getRootzDownloadOptions(download, resumingFilename);
       case Downloader.ArchiveOrg:
         return this.getArchiveOrgDownloadOptions(download, resumingFilename);
+      case Downloader.Custom: {
+        const filename = this.resolveFilename(
+          resumingFilename,
+          download.uri,
+          download.uri
+        );
+        return this.buildDownloadOptions(
+          download.uri,
+          download.downloadPath,
+          filename
+        );
+      }
       default:
         return null;
     }

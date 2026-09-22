@@ -1,0 +1,16 @@
+@use "../../../scss/globals.scss";
+
+.custom-download-modal {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: calc(globals.$spacing-unit * 3);
+    width: 100%;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: calc(globals.$spacing-unit * 1.5);
+  }
+}
