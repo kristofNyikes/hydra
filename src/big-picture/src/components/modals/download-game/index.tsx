@@ -87,6 +87,7 @@ import { useLibrary } from "../../../hooks/use-library.hook";
 interface DownloadGameModalProps {
   visible: boolean;
   onClose: () => void;
+  onCustomDownload?: () => void;
   game: {
     objectId: string;
     shop: Game["shop"];
@@ -108,6 +109,7 @@ interface DownloadGameSourceListProps {
   onClose: () => void;
   steamOption: SteamDownloadOptionData | null;
   epicOption: SteamDownloadOptionData | null;
+  onCustomDownload?: () => void;
   onSelectOption: (option: GameRepack) => void;
   downloadOptions: GameRepack[];
   localDownloadSources: DownloadSource[];
@@ -492,6 +494,7 @@ function syncSourceThresholdFocusScroll(
 export function DownloadGameModal({
   visible,
   onClose,
+  onCustomDownload,
   game,
 }: Readonly<DownloadGameModalProps>) {
   const sessionVersionRef = useRef(0);
@@ -513,6 +516,7 @@ export function DownloadGameModal({
       key={`${gameSessionKey}:${sessionVersionRef.current}`}
       visible={visible}
       onClose={onClose}
+      onCustomDownload={onCustomDownload}
       game={game}
     />
   );
@@ -521,6 +525,7 @@ export function DownloadGameModal({
 function DownloadGameModalSession({
   visible,
   onClose,
+  onCustomDownload,
   game,
 }: Readonly<DownloadGameModalProps>) {
   const userPreferences = useUserPreferences();
@@ -821,6 +826,7 @@ function DownloadGameModalSession({
         onClose={onClose}
         steamOption={steamOption}
         epicOption={epicOption}
+        onCustomDownload={onCustomDownload}
         onSelectOption={handleNextStep}
         downloadOptions={downloadOptions}
         localDownloadSources={localDownloadSources}
@@ -1001,6 +1007,7 @@ function DownloadGameSourceList({
   onClose,
   steamOption,
   epicOption,
+  onCustomDownload,
   onSelectOption,
   downloadOptions,
   localDownloadSources,
@@ -1457,6 +1464,11 @@ function DownloadGameSourceList({
               ))}
           </motion.div>
         </AnimatePresence>
+        {onCustomDownload && (
+          <div className="download-game-modal__source-list__actions">
+            <Button onClick={onCustomDownload}>{t("Custom download")}</Button>
+          </div>
+        )}
       </div>
     </VerticalFocusGroup>
   );

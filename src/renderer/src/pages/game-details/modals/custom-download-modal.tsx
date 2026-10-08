@@ -86,6 +86,17 @@ export function CustomDownloadModal({
     }
   };
 
+  const handlePaste = async () => {
+    try {
+      const clipboardText = await globalThis.electron.clipboard.readText();
+
+      setUri(clipboardText);
+      setError(null);
+    } catch {
+      setError(t("clipboard_read_failed"));
+    }
+  };
+
   const handleDownload = async () => {
     setError(null);
 
@@ -144,6 +155,15 @@ export function CustomDownloadModal({
           placeholder="https://..."
           error={error}
           disabled={downloadStarting}
+          rightContent={
+            <Button
+              theme="outline"
+              onClick={handlePaste}
+              disabled={downloadStarting}
+            >
+              {t("paste")}
+            </Button>
+          }
         />
 
         <TextField
