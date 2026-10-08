@@ -1,0 +1,68 @@
+.custom-download-modal {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing-unit) * 3);
+  width: 100%;
+
+  &__url {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 1.5);
+  }
+
+  &__url-row {
+    display: flex;
+    align-items: flex-end;
+    gap: calc(var(--spacing-unit) * 2);
+  }
+
+  &__url-row > :first-child {
+    flex: 1;
+  }
+
+  &__error {
+    margin: 0;
+    color: var(--color-danger);
+  }
+
+  &__directory {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 2);
+  }
+
+  &__directory-copy {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 0.5);
+  }
+
+  &__directory-label {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  &__directory-description {
+    margin: 0;
+  }
+
+  &__directory-disks {
+    width: 100%;
+  }
+
+  &__directory-disk--full-width {
+    grid-column: 1 / -1;
+  }
+
+  &__download-options {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 1.5);
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: calc(var(--spacing-unit) * 1.5);
+  }
+}

@@ -320,6 +320,8 @@
     "custom_download_description": "Download from a custom URL",
     "download_url": "Download URL",
     "invalid_download_url": "Please enter a valid HTTP or HTTPS URL.",
+    "paste": "Paste",
+    "clipboard_read_failed": "Failed to read the clipboard",
     "download_path_required": "A download path is required.",
     "download_failed": "Failed to start download.",
     "download_path": "Download path",

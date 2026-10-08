@@ -39,6 +39,7 @@ import {
   ConfirmationModal,
   DiscSelectionModal,
   DownloadGameModal,
+  CustomDownloadModal,
 } from "../../components/modals";
 import {
   AchievementsBox,
@@ -511,6 +512,8 @@ export default function Game() {
   const navigate = useNavigate();
 
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
+  const [isCustomDownloadModalOpen, setIsCustomDownloadModalOpen] =
+    useState(false);
   const [isDiscSelectionModalOpen, setIsDiscSelectionModalOpen] =
     useState(false);
   const [isGameSettingsModalOpen, setIsGameSettingsModalOpen] = useState(false);
@@ -951,6 +954,15 @@ export default function Game() {
 
   const handleCloseDownloadModal = useCallback(() => {
     setIsDownloadModalOpen(false);
+  }, []);
+
+  const handleOpenCustomDownloadModal = useCallback(() => {
+    setIsDownloadModalOpen(false);
+    setIsCustomDownloadModalOpen(true);
+  }, []);
+
+  const handleCloseCustomDownloadModal = useCallback(() => {
+    setIsCustomDownloadModalOpen(false);
   }, []);
 
   const handleAddToLibrary = useCallback(async () => {
@@ -1990,6 +2002,7 @@ export default function Game() {
         <DownloadGameModal
           visible={isDownloadModalOpen}
           onClose={handleCloseDownloadModal}
+          onCustomDownload={handleOpenCustomDownloadModal}
           game={{
             objectId: downloadGame?.objectId ?? game?.objectId ?? objectId!,
             shop: downloadGame?.shop ?? game?.shop ?? shop!,
@@ -2001,6 +2014,15 @@ export default function Game() {
             libraryImageUrl: preferredAssets.libraryImageUrl,
             coverImageUrl:
               preferredAssets.coverSrc || preferredAssets.iconSrc || null,
+          }}
+        />
+        <CustomDownloadModal
+          visible={isCustomDownloadModalOpen}
+          onClose={handleCloseCustomDownloadModal}
+          game={{
+            objectId: objectId!,
+            shop: shop!,
+            title: resolvedGameTitle,
           }}
         />
 

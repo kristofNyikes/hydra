@@ -1073,6 +1073,7 @@ declare global {
 
     /* Clipboard */
     clipboard: {
+      readText: () => Promise<string>;
       writeText: (text: string) => Promise<void>;
     };
 
