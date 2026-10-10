@@ -850,6 +850,7 @@ function DownloadGameModalSession({
       isLoading,
       localDownloadSources,
       onClose,
+      onCustomDownload,
       searchTerm,
       selectedSortOption,
       selectedSources,
